@@ -19,7 +19,7 @@ jobs:
         uses: aormsby/Fork-Sync-With-Upstream-action@v3.4
         with:
           target_repo_token: ${{ secrets.GITHUB_TOKEN }}
-          upstream_repository: mtvpls/MoonTVPlus
-          upstream_checkout_branch: main
-          target_checkout_branch: main
-          upstream_pull_args: '-s recursive -X theirs'
+          host_repository: mtvpls/MoonTVPlus
+          upstream_branch: main
+          target_branch: main
+          pull_args: '-s recursive -X theirs'
