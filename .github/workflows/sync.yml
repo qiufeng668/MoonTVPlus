@@ -1,0 +1,27 @@
+name: Sync Fork
+
+于:
+  schedule:
+    - cron: '0 0 * * *' # 每天 UTC 0点（北京时间上午8点）自动执行
+  workflow_dispatch: # 支持你在 GitHub 页面手动点击触发
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    # 赋予 Action 写入你仓库的权限
+    permissions:
+      contents: write
+      
+    steps:
+      - name: Checkout target repo
+        uses: actions/checkout@v4
+
+      - name: Sync upstream
+        uses: aormsby/Fork-Sync-With-Upstream-action@v3.4
+        with:
+          target_repo_token: ${{ secrets.GITHUB_TOKEN }}
+          upstream_repository: mtvpls/MoonTVPlus
+          upstream_checkout_branch: main
+          target_checkout_branch: main
+          # 遇到冲突时，使用原作者的代码覆盖你的（推荐，防止因冲突导致自动化中断）
+          upstream_pull_args: '-s recursive -X theirs'
